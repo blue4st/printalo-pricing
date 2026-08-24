@@ -18,15 +18,18 @@
     "standardDeliveryCost": 200,
     "covers": [],
     "finishes": [
-      { "name": "Silky matte", "perSheetPrice": 0 },
-      { "name": "HD glossy", "perSheetPrice": 0 },
-      { "name": "Soft touch velvet", "perSheetPrice": 20 },
-      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
-      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
-      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 }
+      { "name": "Silky matte", "perPagePrice": 0 },
+      { "name": "HD glossy", "perPagePrice": 0 },
+      { "name": "Soft touch velvet", "perPagePrice": 20 },
+      { "name": "Non tearable silky matte", "perPagePrice": 30 },
+      { "name": "Non tearable HD glossy", "perPagePrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perPagePrice": 40 }
     ],
-    "addons": [],
-    "amazonLink": "https://amzn.in/d/0cYYQ3pG"
+    "amazonLinks": {
+      "A4": "https://amzn.in/d/0dVAqGUc",
+      "6×6": "https://amzn.in/d/0gBuMTOa",
+      "8×8": "https://amzn.in/d/013Kf0G0"
+    }
   },
   "hard_standard": {
     "icon": "📗",
@@ -55,20 +58,24 @@
       { "name": "Poly cotton canvas", "price": 2300 }
     ],
     "finishes": [
-      { "name": "Silky matte", "perSheetPrice": 0 },
-      { "name": "HD glossy", "perSheetPrice": 0 },
-      { "name": "Soft touch velvet", "perSheetPrice": 20 },
-      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
-      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
-      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 },
-      { "name": "Dual metallic silky matte", "perSheetPrice": 60 },
-      { "name": "Dual metallic HD glossy", "perSheetPrice": 60 },
-      { "name": "Pearl metallic silky matte", "perSheetPrice": 60 },
-      { "name": "Pearl metallic HD glossy", "perSheetPrice": 60 },
-      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 75 }
+      { "name": "Silky matte", "perPagePrice": 0 },
+      { "name": "HD glossy", "perPagePrice": 0 },
+      { "name": "Soft touch velvet", "perPagePrice": 20 },
+      { "name": "Non tearable silky matte", "perPagePrice": 30 },
+      { "name": "Non tearable HD glossy", "perPagePrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perPagePrice": 40 },
+      { "name": "Dual metallic silky matte", "perPagePrice": 60 },
+      { "name": "Dual metallic HD glossy", "perPagePrice": 60 },
+      { "name": "Pearl metallic silky matte", "perPagePrice": 60 },
+      { "name": "Pearl metallic HD glossy", "perPagePrice": 60 },
+      { "name": "Non tearable silky matte (350 GSM)", "perPagePrice": 75 }
     ],
-    "addons": [],
-    "amazonLink": "https://amzn.in/d/02jjX8TX"
+    "amazonLinks": {
+      "6×6": "https://amzn.in/d/01eqKMmA",
+      "8×8": "https://amzn.in/d/0f6dCkyW",
+      "8×10 (Portrait)": "https://amzn.in/d/05IUx67x",
+      "10×8 (Landscape)": "https://amzn.in/d/04iOQ6fz"
+    }
   },
   "hard_large": {
     "icon": "📘",
@@ -96,19 +103,22 @@
       { "name": "Poly cotton canvas", "price": 3450 }
     ],
     "finishes": [
-      { "name": "Silky matte", "perSheetPrice": 0 },
-      { "name": "HD glossy", "perSheetPrice": 0 },
-      { "name": "Soft touch velvet", "perSheetPrice": 40 },
-      { "name": "Non tearable silky matte", "perSheetPrice": 60 },
-      { "name": "Non tearable HD glossy", "perSheetPrice": 60 },
-      { "name": "Non tearable soft touch velvet", "perSheetPrice": 80 },
-      { "name": "Dual metallic silky matte", "perSheetPrice": 120 },
-      { "name": "Dual metallic HD glossy", "perSheetPrice": 120 },
-      { "name": "Pearl metallic silky matte", "perSheetPrice": 120 },
-      { "name": "Pearl metallic HD glossy", "perSheetPrice": 120 },
-      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 150 }
+      { "name": "Silky matte", "perPagePrice": 0 },
+      { "name": "HD glossy", "perPagePrice": 0 },
+      { "name": "Soft touch velvet", "perPagePrice": 40 },
+      { "name": "Non tearable silky matte", "perPagePrice": 60 },
+      { "name": "Non tearable HD glossy", "perPagePrice": 60 },
+      { "name": "Non tearable soft touch velvet", "perPagePrice": 80 },
+      { "name": "Dual metallic silky matte", "perPagePrice": 120 },
+      { "name": "Dual metallic HD glossy", "perPagePrice": 120 },
+      { "name": "Pearl metallic silky matte", "perPagePrice": 120 },
+      { "name": "Pearl metallic HD glossy", "perPagePrice": 120 },
+      { "name": "Non tearable silky matte (350 GSM)", "perPagePrice": 150 }
     ],
-    "addons": [],
-    "amazonLink": "https://amzn.in/d/02jjX8TX"
+    "amazonLinks": {
+      "12×12": "https://amzn.in/d/09qicZ4U",
+      "12×15": "https://amzn.in/d/0irCNCf3",
+      "15×12": "https://amzn.in/d/057byRvt"
+    }
   }
 }
