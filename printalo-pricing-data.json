@@ -9,6 +9,7 @@
       "8×8",
       "6×6"
     ],
+    "defaultSize": "A4",
     "printPerPage": 30,
     "binding": 200,
     "pageMin": 12,
@@ -33,12 +34,14 @@
     "desc": "Standard sizes — up to 8×12″",
     "label": "Hard cover — standard",
     "sizes": [
-      "A4",
       "8×8",
-      "8×10",
-      "8×12",
-      "6×6"
+      "6×6",
+      "8×10 (Portrait)",
+      "10×8 (Landscape)",
+      "8×12 (Portrait)",
+      "12×8 (Landscape)"
     ],
+    "defaultSize": "8×8",
     "printPerPage": 30,
     "binding": 0,
     "pageMin": 10,
@@ -48,7 +51,7 @@
     "covers": [
       { "name": "Photo cover — matte", "price": 800 },
       { "name": "Photo cover — velvet", "price": 1300 },
-      { "name": "Photo acrylic (plexi)", "price": 1800 },
+      { "name": "Photo acrylic (plexi glass)", "price": 1800 },
       { "name": "Poly cotton canvas", "price": 2300 }
     ],
     "finishes": [
@@ -73,10 +76,13 @@
     "desc": "Statement sizes — 12×12″ and above",
     "label": "Hard cover — large",
     "sizes": [
-      "12×12",
       "12×15",
-      "12×18"
+      "15×12",
+      "12×12",
+      "12×18",
+      "18×12"
     ],
+    "defaultSize": "12×15",
     "printPerPage": 60,
     "binding": 0,
     "pageMin": 10,
@@ -86,7 +92,7 @@
     "covers": [
       { "name": "Photo cover — matte", "price": 1200 },
       { "name": "Photo cover — velvet", "price": 1950 },
-      { "name": "Photo acrylic (plexi)", "price": 2700 },
+      { "name": "Photo acrylic (plexi glass)", "price": 2700 },
       { "name": "Poly cotton canvas", "price": 3450 }
     ],
     "finishes": [

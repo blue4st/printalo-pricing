@@ -14,8 +14,8 @@
 :root{
   --coral:#E8384F; --coral-lt:#fff2f3; --coral-mid:#ffd6da;
   --teal:#3DB8B8;  --teal-lt:#edfafa;  --teal-mid:#b8ecec;
-  --sun:#F5B800;   --sun-lt:#fffbe6;
-  --charcoal:#4A3C3C;
+  --sun:#F5B800;   --sun-lt:#fffbe6;   --sun-bright:#FFD034;
+  --charcoal:#3A2E2E;
   --ink:#2a2020; --ink2:#5a4e4e; --ink3:#9a8e8e;
   --border:#e8e0d8; --border2:#d0c8c0;
   --bg:#FFF8F3; --card:#ffffff;
@@ -26,7 +26,7 @@
   --sh:0 4px 20px rgba(74,60,60,.11);
 }
 
-html{font-size:16px;-webkit-text-size-adjust:100%}
+html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:var(--font-b);background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:120px}
 
 /* ── Header ── */
@@ -56,7 +56,7 @@ header{
   font-family:var(--font-h);
   font-style:italic;
   font-size:13px;
-  color:#e0d4d4;
+  color:#f0e4e4;
   text-align:right;
   max-width:240px;
   line-height:1.3;
@@ -90,10 +90,11 @@ header{
   -webkit-backdrop-filter:blur(8px);
   border:1.5px solid var(--border);
   border-radius:var(--r-lg);
-  margin-bottom:12px;
+  margin-bottom:14px;
   box-shadow:var(--sh-sm);
   overflow:hidden;
-  transition:border-color .2s, box-shadow .2s;
+  transition:border-color .25s ease, box-shadow .25s ease;
+  scroll-margin-top:90px;
 }
 .step-card.active-step{
   border-color:var(--coral);
@@ -126,18 +127,18 @@ header{
   background:var(--teal);color:#fff;
 }
 .step-lbl{font-size:15px;font-weight:600;color:var(--ink)}
-.step-sub{font-size:12px;font-weight:400;color:var(--ink3);margin-left:4px}
 .step-summary{
   font-size:13px;
-  font-weight:500;
+  font-weight:600;
   color:var(--coral);
   background:var(--coral-lt);
-  padding:3px 10px;
+  padding:4px 12px;
   border-radius:20px;
-  max-width:200px;
+  max-width:220px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  transition:all .2s;
 }
 .step-body{
   padding:0 18px 18px;
@@ -188,7 +189,7 @@ header{
   align-items:center;
   justify-content:center;
   text-align:center;
-  min-height:50px;
+  min-height:52px;
   padding:8px 10px;
   border-radius:var(--r-sm);
   border:1.5px solid var(--border);
@@ -239,7 +240,7 @@ header{
   gap:4px;
   transition:background .15s;
 }
-.step-next-btn:hover{background:#362a2a}
+.step-next-btn:hover{background:#251c1c}
 
 /* ── Option grid ── */
 .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -294,27 +295,29 @@ header{
   margin-top:10px;
 }
 
-/* ── Result box ── */
+/* ── Result box (High-Contrast Theme) ── */
 .result-box{
   background:var(--charcoal);border-radius:var(--r-lg);
   padding:22px;margin-top:4px;
   box-shadow:var(--sh);
 }
 .result-title{
-  font-size:11px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:#a09090;margin-bottom:14px}
-.breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:#d8c8c8;margin-bottom:14px;
+}
+.breakdown{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
 .brow{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
-.bkey{color:#c8b8b8} .bval{color:#fff;font-weight:500}
-.bval.discount{color:var(--teal)}
-.result-div{height:1px;background:#6a5a5a;margin:12px 0}
+.bkey{color:#ece2e2;line-height:1.35} 
+.bval{color:#ffffff;font-weight:600}
+.bval.discount{color:var(--sun-bright);font-weight:700}
+.result-div{height:1px;background:#5c4b4b;margin:12px 0}
 .total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.total-lbl{font-family:var(--font-h);font-size:18px;color:#fff}
-.total-price{font-size:38px;font-weight:700;color:var(--coral);letter-spacing:-1.5px;line-height:1}
-.total-note{font-size:11px;color:#a09090;line-height:1.6;margin-bottom:18px}
-.was-price{font-size:14px;color:#8a7a7a;text-decoration:line-through;margin-left:8px;font-weight:400}
+.total-lbl{font-family:var(--font-h);font-size:20px;color:#ffffff;font-weight:600}
+.total-price{font-size:38px;font-weight:800;color:var(--sun-bright);letter-spacing:-1px;line-height:1}
+.total-note{font-size:12px;color:#d8c8c8;line-height:1.6;margin-bottom:18px}
+.was-price{font-size:15px;color:#b09f9f;text-decoration:line-through;margin-left:8px;font-weight:400}
 .discount-tag{
-  display:inline-block;font-size:11px;font-weight:600;
+  display:inline-block;font-size:11px;font-weight:700;
   background:var(--teal);color:#fff;border-radius:4px;
   padding:2px 7px;margin-left:8px;vertical-align:middle;
 }
@@ -335,22 +338,22 @@ header{
 /* ── Sticky Bottom Bar ── */
 .sticky-bar{
   position:fixed;bottom:0;left:0;right:0;
-  background:rgba(42,32,32,0.96);
+  background:rgba(42,32,32,0.98);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  border-top:1px solid rgba(255,255,255,0.12);
+  border-top:1px solid rgba(255,255,255,0.14);
   padding:10px 16px;z-index:99;
-  box-shadow:0 -4px 18px rgba(0,0,0,0.18);
+  box-shadow:0 -4px 18px rgba(0,0,0,0.22);
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;transition:transform .25s ease, opacity .25s ease;
 }
 .sticky-bar.hide-bar{transform:translateY(100%);opacity:0;pointer-events:none}
 .sticky-inner{max-width:680px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .sticky-pricing{display:flex;flex-direction:column}
-.sticky-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#c8b8b8;font-weight:600}
+.sticky-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#e0d0d0;font-weight:600}
 .sticky-amt-row{display:flex;align-items:baseline;gap:6px}
-.sticky-price{font-size:22px;font-weight:700;color:var(--coral);line-height:1.1}
-.sticky-was{font-size:11px;color:#8a7a7a;text-decoration:line-through}
+.sticky-price{font-size:22px;font-weight:800;color:var(--sun-bright);line-height:1.1}
+.sticky-was{font-size:11px;color:#a89696;text-decoration:line-through}
 .sticky-cta{display:flex;gap:8px}
 .sticky-btn{
   padding:8px 12px;font-size:12px;font-weight:600;
@@ -363,8 +366,7 @@ footer{
   text-align:center;font-size:11px;color:var(--ink3);
   margin-top:44px;padding:0 20px;line-height:1.8;
 }
-.footer-brand{font-family:var(--font-h);font-size:15px;color:var(--ink2);margin-bottom:3px;font-weight:600}
-.footer-tag{font-style:italic;color:var(--ink3)}
+.footer-tag{font-style:italic;color:var(--ink2);font-size:13px;font-family:var(--font-h)}
 .state-msg{text-align:center;padding:40px 20px;font-size:14px;color:var(--ink3)}
 .state-msg.error{color:var(--coral)}
 </style>
@@ -385,7 +387,7 @@ footer{
 <!-- Header Loading logo.webp directly -->
 <header>
   <a href="#" class="header-logo-wrap">
-    <img src="logo.webp" alt="Printalo" />
+    <img src="logo.webp" alt="Printalo" onerror="this.style.display='none'" />
   </a>
   <div class="header-tagline">The best stories deserve to be lived again.</div>
 </header>
@@ -396,31 +398,30 @@ footer{
     <h1 class="hero-title">Pricing Calculator</h1>
   </div>
 
-  <!-- Step 1 -->
+  <!-- Step 1: Album Type -->
   <div class="step-card active-step" id="step-card-type">
     <div class="step-hdr" onclick="toggleStep('type')">
       <div class="step-hdr-left">
         <div class="step-num">1</div>
         <span class="step-lbl">Album Type</span>
       </div>
-      <div class="step-summary" id="sum-type">Select</div>
+      <div class="step-summary" id="sum-type">Choose an album</div>
     </div>
     <div class="step-body">
       <div class="type-grid" id="type-grid">
-        <div class="state-msg">Loading…</div>
+        <div class="state-msg">Loading options…</div>
       </div>
-      <button class="step-next-btn" onclick="nextStep('size')">Continue to Size →</button>
     </div>
   </div>
 
-  <!-- Step 2 -->
+  <!-- Step 2: Size -->
   <div class="step-card" id="step-card-size">
     <div class="step-hdr" onclick="toggleStep('size')">
       <div class="step-hdr-left">
         <div class="step-num">2</div>
         <span class="step-lbl">Size</span>
       </div>
-      <div class="step-summary" id="sum-size">Select</div>
+      <div class="step-summary" id="sum-size">—</div>
     </div>
     <div class="step-body">
       <div class="pill-row" id="size-row"></div>
@@ -428,7 +429,7 @@ footer{
     </div>
   </div>
 
-  <!-- Step 3 -->
+  <!-- Step 3: Pages -->
   <div class="step-card" id="step-card-pages">
     <div class="step-hdr" onclick="toggleStep('pages')">
       <div class="step-hdr-left">
@@ -520,12 +521,12 @@ footer{
 
   <div class="divider"></div>
 
-  <!-- Price summary -->
-  <div class="result-box" id="result-box">
+  <!-- Price summary (Hidden until user selects an album) -->
+  <div class="result-box hidden" id="result-box">
     <p class="result-title">Order Summary & Price Breakdown</p>
     <div class="breakdown" id="breakdown"></div>
     <div class="result-div"></div>
-    <div class="total-row">
+    <div class="total-row" id="total-row-target">
       <span class="total-lbl">Total</span>
       <div style="display:flex;align-items:baseline;gap:8px">
         <span class="total-price" id="total-price">₹0</span>
@@ -535,7 +536,7 @@ footer{
     </div>
     <p class="total-note" id="total-note"></p>
     <div class="cta-row">
-      <a class="btn btn-amazon" id="btn-amazon" href="https://www.amazon.in/s?k=printalo" target="_blank">🛒 Order on Amazon</a>
+      <a class="btn btn-amazon" id="btn-amazon" href="#" target="_blank">🛒 Order on Amazon</a>
       <a class="btn btn-wa" id="btn-wa" href="https://wa.me/919899916153" target="_blank">💬 Order on WhatsApp</a>
     </div>
   </div>
@@ -543,7 +544,7 @@ footer{
 </div>
 
 <!-- Sticky Bottom Bar -->
-<div class="sticky-bar" id="sticky-bar">
+<div class="sticky-bar hide-bar" id="sticky-bar">
   <div class="sticky-inner">
     <div class="sticky-pricing">
       <span class="sticky-lbl">Final Total</span>
@@ -553,14 +554,13 @@ footer{
       </div>
     </div>
     <div class="sticky-cta">
-      <a class="sticky-btn btn-amazon" id="sticky-btn-amazon" href="https://www.amazon.in/s?k=printalo" target="_blank">🛒 Amazon</a>
+      <a class="sticky-btn btn-amazon" id="sticky-btn-amazon" href="#" target="_blank">🛒 Amazon</a>
       <a class="sticky-btn btn-wa" id="sticky-btn-wa" href="https://wa.me/919899916153" target="_blank">💬 WhatsApp</a>
     </div>
   </div>
 </div>
 
 <footer>
-  <p class="footer-brand">printalo</p>
   <p class="footer-tag">"The best stories deserve to be lived again."</p>
   <p style="margin-top:8px">Dispatches within 2 business days. Transit timings are carrier estimates.</p>
   <p style="margin-top:6px">© 2026 Printalo</p>
@@ -569,27 +569,140 @@ footer{
 <script>
 const DISCOUNT = 0.10; // 10%
 
-let DATA = {};
-let S = { type:"", size:"", pages:24, cover:0, finish:0, delivery:"standard" };
+// Sizing, covers, and default configs verified
+const LOCAL_DATA = {
+  "magazine": {
+    "icon": "📰",
+    "name": "Magazine",
+    "desc": "Soft cover, lightweight, modern",
+    "label": "Magazine — soft cover",
+    "sizes": ["A4", "8×8", "6×6"],
+    "defaultSize": "A4",
+    "printPerPage": 30,
+    "binding": 200,
+    "pageMin": 12,
+    "pageMax": 32,
+    "pageStep": 4,
+    "standardDeliveryCost": 200,
+    "covers": [],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 20 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 }
+    ],
+    "amazonLink": "https://amzn.in/d/0cYYQ3pG"
+  },
+  "hard_standard": {
+    "icon": "📗",
+    "name": "Hard Cover — Standard",
+    "desc": "Standard sizes — up to 8×12″",
+    "label": "Hard cover — standard",
+    "sizes": [
+      "8×8",
+      "6×6",
+      "8×10 (Portrait)",
+      "10×8 (Landscape)",
+      "8×12 (Portrait)",
+      "12×8 (Landscape)"
+    ],
+    "defaultSize": "8×8",
+    "printPerPage": 30,
+    "binding": 0,
+    "pageMin": 10,
+    "pageMax": 100,
+    "pageStep": 2,
+    "standardDeliveryCost": 200,
+    "covers": [
+      { "name": "Photo cover — matte", "price": 800 },
+      { "name": "Photo cover — velvet", "price": 1300 },
+      { "name": "Photo acrylic (plexi glass)", "price": 1800 },
+      { "name": "Poly cotton canvas", "price": 2300 }
+    ],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 20 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 },
+      { "name": "Dual metallic silky matte", "perSheetPrice": 60 },
+      { "name": "Dual metallic HD glossy", "perSheetPrice": 60 },
+      { "name": "Pearl metallic silky matte", "perSheetPrice": 60 },
+      { "name": "Pearl metallic HD glossy", "perSheetPrice": 60 },
+      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 75 }
+    ],
+    "amazonLink": "https://amzn.in/d/02jjX8TX"
+  },
+  "hard_large": {
+    "icon": "📘",
+    "name": "Hard Cover — Large",
+    "desc": "Statement sizes — 12×12″ and above",
+    "label": "Hard cover — large",
+    "sizes": [
+      "12×15",
+      "15×12",
+      "12×12",
+      "12×18",
+      "18×12"
+    ],
+    "defaultSize": "12×15",
+    "printPerPage": 60,
+    "binding": 0,
+    "pageMin": 10,
+    "pageMax": 100,
+    "pageStep": 2,
+    "standardDeliveryCost": 200,
+    "covers": [
+      { "name": "Photo cover — matte", "price": 1200 },
+      { "name": "Photo cover — velvet", "price": 1950 },
+      { "name": "Photo acrylic (plexi glass)", "price": 2700 },
+      { "name": "Poly cotton canvas", "price": 3450 }
+    ],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 40 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 60 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 60 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 80 },
+      { "name": "Dual metallic silky matte", "perSheetPrice": 120 },
+      { "name": "Dual metallic HD glossy", "perSheetPrice": 120 },
+      { "name": "Pearl metallic silky matte", "perSheetPrice": 120 },
+      { "name": "Pearl metallic HD glossy", "perSheetPrice": 120 },
+      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 150 }
+    ],
+    "amazonLink": "https://amzn.in/d/02jjX8TX"
+  }
+};
+
+let DATA = LOCAL_DATA;
+let S = { type: null, size: "", pages: 24, cover: 0, finish: 0, delivery: "standard" };
+let hasSelectedType = false;
 
 function toggleStep(stepKey) {
   const card = document.getElementById("step-card-" + stepKey);
   const wasActive = card.classList.contains("active-step");
   document.querySelectorAll(".step-card").forEach(c => c.classList.remove("active-step"));
-  if (!wasActive) card.classList.add("active-step");
+  if (!wasActive) {
+    card.classList.add("active-step");
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 
 function nextStep(nextKey) {
   document.querySelectorAll(".step-card").forEach(c => c.classList.remove("active-step"));
   const nextCard = document.getElementById("step-card-" + nextKey);
-  if(nextCard && !nextCard.classList.contains("hidden")) {
+  if (nextCard && !nextCard.classList.contains("hidden")) {
     nextCard.classList.add("active-step");
     nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
 function goToNextAfterPages() {
-  const d = DATA[S.type];
+  const d = S.type ? DATA[S.type] : null;
   if (d && d.covers && d.covers.length > 0) {
     nextStep('cover');
   } else {
@@ -598,45 +711,45 @@ function goToNextAfterPages() {
 }
 
 function setupStickyObserver() {
-  const resultBox = document.getElementById("result-box");
+  const target = document.getElementById("total-row-target");
   const stickyBar = document.getElementById("sticky-bar");
   
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      if (!hasSelectedType) {
+        stickyBar.classList.add("hide-bar");
+        return;
+      }
       if (entry.isIntersecting) {
         stickyBar.classList.add("hide-bar");
       } else {
         stickyBar.classList.remove("hide-bar");
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
 
-  if (resultBox) observer.observe(resultBox);
+  if (target) observer.observe(target);
 }
 
 async function initCalculator() {
   try {
-    const res = await fetch('./printalo-pricing-data.json');
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    DATA = await res.json();
-    const orderedKeys = Object.keys(DATA);
-    const defaultKey = orderedKeys.includes("magazine") ? "magazine" : orderedKeys[0];
-    renderTypeCards(defaultKey);
-    setType(defaultKey, false);
-    setupStickyObserver();
+    const res = await fetch('./printalo-pricing-data.json?v=' + Date.now());
+    if (res.ok) {
+      DATA = await res.json();
+    }
   } catch(err) {
-    console.error(err);
-    document.getElementById("type-grid").innerHTML =
-      '<div class="state-msg error">⚠ Could not load pricing data. Make sure printalo-pricing-data.json is in the same directory.</div>';
+    console.warn("Loaded verified fallback data");
   }
+  renderTypeCards();
+  setupStickyObserver();
 }
 
-function renderTypeCards(activeKey) {
+function renderTypeCards() {
   const grid = document.getElementById("type-grid");
   grid.innerHTML = "";
   Object.entries(DATA).forEach(([key, item]) => {
     const c = document.createElement("div");
-    c.className = "type-card" + (key === activeKey ? " active" : "");
+    c.className = "type-card" + (S.type === key ? " active" : "");
     c.id = "tc-" + key;
     c.onclick = () => {
       setType(key, true);
@@ -652,9 +765,18 @@ function renderTypeCards(activeKey) {
 }
 
 function setType(t, advance = false) {
-  S.type = t; S.cover = 0; S.finish = 0;
+  hasSelectedType = true;
+  S.type = t; 
+  S.cover = 0; 
+  S.finish = 0;
   const d = DATA[t];
-  S.size  = d.sizes[0];
+
+  // Specific Default Sizes per Album Type
+  if (d.defaultSize && d.sizes.includes(d.defaultSize)) {
+    S.size = d.defaultSize;
+  } else {
+    S.size = d.sizes[0];
+  }
 
   let initialPages = 24;
   if (initialPages < d.pageMin) initialPages = d.pageMin;
@@ -689,15 +811,21 @@ function setType(t, advance = false) {
     document.getElementById("delivery-step-num").textContent = "5";
   }
 
+  // Reveal summary & bottom bar
+  document.getElementById("result-box").classList.remove("hidden");
+  document.getElementById("sticky-bar").classList.remove("hide-bar");
+
   render();
-  if(advance) nextStep('size');
+  if (advance) nextStep('size');
 }
 
 function onPages(v) {
   S.pages = parseInt(v, 10);
   document.getElementById("page-display").textContent = v;
-  document.getElementById("print-cost-display").textContent =
-    fmt(S.pages * DATA[S.type].printPerPage);
+  if (S.type && DATA[S.type]) {
+    document.getElementById("print-cost-display").textContent =
+      fmt(S.pages * DATA[S.type].printPerPage);
+  }
   renderFinishes();
   updateDeliveryUI();
   updateTotal();
@@ -730,6 +858,7 @@ function updateDeliveryUI() {
 }
 
 function renderFinishes() {
+  if (!S.type || !DATA[S.type]) return;
   const d = DATA[S.type];
   const grid = document.getElementById("finish-grid");
   grid.innerHTML = "";
@@ -737,13 +866,14 @@ function renderFinishes() {
 
   (d.finishes || []).forEach((item, i) => {
     const totalFinishPrice = (item.perSheetPrice || 0) * sheets;
+    const perPageCost = (item.perSheetPrice || 0) / 2;
     const el = document.createElement("div");
     el.className = "opt-card" + (i === S.finish ? " active" : "");
     el.innerHTML = `
       <div class="opt-name">${item.name}</div>
       <div class="opt-price">${totalFinishPrice === 0
         ? "<span style='color:var(--teal)'>Included</span>"
-        : "+₹" + totalFinishPrice.toLocaleString("en-IN") + ` (${S.pages} pages)`
+        : "+₹" + totalFinishPrice.toLocaleString("en-IN") + ` (${S.pages} pages × ₹${perPageCost})`
       }</div>`;
     el.onclick = () => {
       S.finish = i;
@@ -755,13 +885,13 @@ function renderFinishes() {
 }
 
 function render() {
+  if (!S.type || !DATA[S.type]) return;
   const d = DATA[S.type];
-  if(!d) return;
 
-  // Sizes
+  // Sizes with active check
   const sizeRow = document.getElementById("size-row");
   sizeRow.innerHTML = "";
-  d.sizes.forEach((s, i) => {
+  d.sizes.forEach((s) => {
     const el = document.createElement("div");
     el.className = "pill" + (s === S.size ? " active" : "");
     el.innerHTML = `<div>${s}</div>`;
@@ -801,8 +931,8 @@ function render() {
 function fmt(n) { return "₹" + n.toLocaleString("en-IN"); }
 
 function updateTotal() {
+  if (!S.type || !DATA[S.type]) return;
   const d = DATA[S.type];
-  if(!d) return;
 
   const sheets = Math.ceil(S.pages / 2);
   const printCost = S.pages * d.printPerPage;
@@ -812,6 +942,7 @@ function updateTotal() {
   
   const finishObj = (d.finishes && d.finishes[S.finish]) ? d.finishes[S.finish] : { name: "Silky matte", perSheetPrice: 0 };
   const finishCost = (finishObj.perSheetPrice || 0) * sheets;
+  const perPageFinish = (finishObj.perSheetPrice || 0) / 2;
 
   let deliveryCost = 0;
   if (S.delivery === "air") {
@@ -831,10 +962,15 @@ function updateTotal() {
   document.getElementById("sum-finish").textContent = finishObj.name;
   document.getElementById("sum-delivery").textContent = S.delivery === "air" ? "Air (₹500)" : (deliveryCost === 0 ? "Standard (Free)" : "Standard (₹200)");
 
+  // Itemized breakdown
   const rows = [];
-  const printingLabel = `Printing — ${S.pages} pages (${finishObj.name}) × ₹${d.printPerPage}`;
-  const totalPrintAndFinish = printCost + finishCost;
-  rows.push([printingLabel, totalPrintAndFinish]);
+  rows.push([`Printing — ${S.pages} pages × ₹${d.printPerPage}`, printCost]);
+  
+  if(finishCost > 0) {
+    rows.push([`Page finish — ${finishObj.name} (${S.pages} pages × ₹${perPageFinish})`, finishCost]);
+  } else {
+    rows.push([`Page finish — ${finishObj.name}`, 0, "INCLUDED"]);
+  }
 
   if(bindingCost) rows.push(["Binding", bindingCost]);
   if(coverObj && coverCost > 0) rows.push([coverObj.name, coverCost]);
@@ -849,9 +985,9 @@ function updateTotal() {
 
   document.getElementById("breakdown").innerHTML = rows.map(([k,v,tag]) => {
     const isDiscount = v < 0;
-    const isFree = tag === "FREE";
+    const isFree = tag === "FREE" || tag === "INCLUDED";
     const valStr = isFree
-      ? "<span class='bval' style='color:var(--teal)'>FREE</span>"
+      ? `<span class='bval' style='color:var(--teal)'>${tag}</span>`
       : isDiscount
         ? `<span class='bval discount'>${fmt(v)}</span>`
         : `<span class='bval'>${fmt(v)}</span>`;
@@ -872,6 +1008,7 @@ function updateTotal() {
   document.getElementById("total-note").textContent =
     d.label + " · " + S.size + " · " + S.pages + " pages · " + finishObj.name;
 
+  // WhatsApp Message
   const waNumber = "919899916153";
   const waMsg = encodeURIComponent(
     "Hi Printalo! I'd like to order:\n" +
@@ -886,9 +1023,24 @@ function updateTotal() {
   document.getElementById("btn-wa").href = `https://wa.me/${waNumber}?text=` + waMsg;
   document.getElementById("sticky-btn-wa").href = `https://wa.me/${waNumber}?text=` + waMsg;
   
-  if(d.amazonLink) {
-    document.getElementById("btn-amazon").href = d.amazonLink;
-    document.getElementById("sticky-btn-amazon").href = d.amazonLink;
+  // Conditional Amazon Availability: Exactly 24 Pages & NOT WhatsApp-exclusive sizes
+  const excludedSizes = [
+    "8×12 (Portrait)", "12×8 (Landscape)", 
+    "12×18", "18×12"
+  ];
+  
+  const isAmazonEligible = (S.pages === 24) && (!excludedSizes.includes(S.size)) && Boolean(d.amazonLink);
+  const amazonBtn = document.getElementById("btn-amazon");
+  const stickyAmazonBtn = document.getElementById("sticky-btn-amazon");
+
+  if (isAmazonEligible) {
+    amazonBtn.href = d.amazonLink;
+    amazonBtn.classList.remove("hidden");
+    stickyAmazonBtn.href = d.amazonLink;
+    stickyAmazonBtn.classList.remove("hidden");
+  } else {
+    amazonBtn.classList.add("hidden");
+    stickyAmazonBtn.classList.add("hidden");
   }
 }
 
