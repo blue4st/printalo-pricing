@@ -1,0 +1,108 @@
+{
+  "magazine": {
+    "icon": "📰",
+    "name": "Magazine",
+    "desc": "Soft cover, lightweight, modern",
+    "label": "Magazine — soft cover",
+    "sizes": [
+      "A4",
+      "8×8",
+      "6×6"
+    ],
+    "printPerPage": 30,
+    "binding": 200,
+    "pageMin": 12,
+    "pageMax": 32,
+    "pageStep": 4,
+    "standardDeliveryCost": 200,
+    "covers": [],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 20 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 }
+    ],
+    "addons": [],
+    "amazonLink": "https://amzn.in/d/0cYYQ3pG"
+  },
+  "hard_standard": {
+    "icon": "📗",
+    "name": "Hard Cover — Standard",
+    "desc": "Standard sizes — up to 8×12″",
+    "label": "Hard cover — standard",
+    "sizes": [
+      "A4",
+      "8×8",
+      "8×10",
+      "8×12",
+      "6×6"
+    ],
+    "printPerPage": 30,
+    "binding": 0,
+    "pageMin": 10,
+    "pageMax": 100,
+    "pageStep": 2,
+    "standardDeliveryCost": 200,
+    "covers": [
+      { "name": "Photo cover — matte", "price": 800 },
+      { "name": "Photo cover — velvet", "price": 1300 },
+      { "name": "Photo acrylic (plexi)", "price": 1800 },
+      { "name": "Poly cotton canvas", "price": 2300 }
+    ],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 20 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 30 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 30 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 40 },
+      { "name": "Dual metallic silky matte", "perSheetPrice": 60 },
+      { "name": "Dual metallic HD glossy", "perSheetPrice": 60 },
+      { "name": "Pearl metallic silky matte", "perSheetPrice": 60 },
+      { "name": "Pearl metallic HD glossy", "perSheetPrice": 60 },
+      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 75 }
+    ],
+    "addons": [],
+    "amazonLink": "https://amzn.in/d/02jjX8TX"
+  },
+  "hard_large": {
+    "icon": "📘",
+    "name": "Hard Cover — Large",
+    "desc": "Statement sizes — 12×12″ and above",
+    "label": "Hard cover — large",
+    "sizes": [
+      "12×12",
+      "12×15",
+      "12×18"
+    ],
+    "printPerPage": 60,
+    "binding": 0,
+    "pageMin": 10,
+    "pageMax": 100,
+    "pageStep": 2,
+    "standardDeliveryCost": 200,
+    "covers": [
+      { "name": "Photo cover — matte", "price": 1200 },
+      { "name": "Photo cover — velvet", "price": 1950 },
+      { "name": "Photo acrylic (plexi)", "price": 2700 },
+      { "name": "Poly cotton canvas", "price": 3450 }
+    ],
+    "finishes": [
+      { "name": "Silky matte", "perSheetPrice": 0 },
+      { "name": "HD glossy", "perSheetPrice": 0 },
+      { "name": "Soft touch velvet", "perSheetPrice": 40 },
+      { "name": "Non tearable silky matte", "perSheetPrice": 60 },
+      { "name": "Non tearable HD glossy", "perSheetPrice": 60 },
+      { "name": "Non tearable soft touch velvet", "perSheetPrice": 80 },
+      { "name": "Dual metallic silky matte", "perSheetPrice": 120 },
+      { "name": "Dual metallic HD glossy", "perSheetPrice": 120 },
+      { "name": "Pearl metallic silky matte", "perSheetPrice": 120 },
+      { "name": "Pearl metallic HD glossy", "perSheetPrice": 120 },
+      { "name": "Non tearable silky matte (350 GSM)", "perSheetPrice": 150 }
+    ],
+    "addons": [],
+    "amazonLink": "https://amzn.in/d/02jjX8TX"
+  }
+}

@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Printalo — Pricing Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Brand tokens ── */
+:root{
+  --coral:#E8384F; --coral-lt:#fff2f3; --coral-mid:#ffd6da;
+  --teal:#3DB8B8;  --teal-lt:#edfafa;  --teal-mid:#b8ecec;
+  --sun:#F5B800;   --sun-lt:#fffbe6;
+  --charcoal:#4A3C3C;
+  --ink:#2a2020; --ink2:#5a4e4e; --ink3:#9a8e8e;
+  --border:#e8e0d8; --border2:#d0c8c0;
+  --bg:#FFF8F3; --card:#ffffff;
+  --r-sm:8px; --r:12px; --r-lg:18px;
+  --font-h:'Playfair Display',Georgia,serif;
+  --font-b:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sh-sm:0 1px 4px rgba(74,60,60,.07);
+  --sh:0 4px 20px rgba(74,60,60,.11);
+}
+
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-b);background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:120px}
+
+/* ── Header ── */
+header{
+  background:var(--charcoal);
+  padding:0 20px;
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,.22);
+}
+.header-logo-wrap{
+  display:flex;
+  align-items:center;
+  text-decoration:none;
+}
+.header-logo-wrap img{
+  height:52px;
+  width:auto;
+  max-width:180px;
+  object-fit:contain;
+  display:block;
+}
+.header-tagline{
+  font-family:var(--font-h);
+  font-style:italic;
+  font-size:13px;
+  color:#e0d4d4;
+  text-align:right;
+  max-width:240px;
+  line-height:1.3;
+}
+
+/* ── Organic background blobs ── */
+.blob-bg{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.blob-bg svg{position:absolute;opacity:.45}
+
+/* ── Layout ── */
+.outer{max-width:680px;margin:0 auto;padding:32px 18px 0;position:relative;z-index:1}
+
+/* ── Hero ── */
+.hero{margin-bottom:24px;text-align:left}
+.hero-title{
+  font-family:var(--font-h);
+  font-size:36px;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.2;
+  letter-spacing:-0.5px;
+}
+
+/* ── Step card (Accordion) ── */
+.step-card{
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  margin-bottom:12px;
+  box-shadow:var(--sh-sm);
+  overflow:hidden;
+  transition:border-color .2s, box-shadow .2s;
+}
+.step-card.active-step{
+  border-color:var(--coral);
+  box-shadow:var(--sh);
+}
+.step-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px;
+  cursor:pointer;
+  user-select:none;
+}
+.step-hdr-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.step-num{
+  width:26px;height:26px;border-radius:50%;
+  background:#ede6e2;color:var(--ink2);
+  font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .2s, color .2s;
+}
+.step-card.active-step .step-num{
+  background:var(--coral);color:#fff;
+}
+.step-card.completed .step-num{
+  background:var(--teal);color:#fff;
+}
+.step-lbl{font-size:15px;font-weight:600;color:var(--ink)}
+.step-sub{font-size:12px;font-weight:400;color:var(--ink3);margin-left:4px}
+.step-summary{
+  font-size:13px;
+  font-weight:500;
+  color:var(--coral);
+  background:var(--coral-lt);
+  padding:3px 10px;
+  border-radius:20px;
+  max-width:200px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.step-body{
+  padding:0 18px 18px;
+  display:none;
+}
+.step-card.active-step .step-body{
+  display:block;
+}
+
+/* ── Type cards ── */
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:520px){.type-grid{grid-template-columns:1fr}}
+.type-card{
+  border:2px solid var(--border);border-radius:var(--r);
+  padding:14px 12px;cursor:pointer;
+  background:var(--card);
+  transition:border-color .15s,background .15s,box-shadow .15s;
+  user-select:none;position:relative;
+}
+.type-card:hover{border-color:var(--border2);box-shadow:var(--sh-sm)}
+.type-card.active{border-color:var(--coral);background:var(--coral-lt);box-shadow:0 0 0 1px var(--coral-mid)}
+.type-check{
+  position:absolute;top:9px;right:9px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--coral);color:#fff;font-size:10px;
+  display:none;align-items:center;justify-content:center;
+}
+.type-card.active .type-check{display:flex}
+.type-icon{font-size:24px;margin-bottom:8px}
+.type-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px;line-height:1.3}
+.type-desc{font-size:11px;color:var(--ink3);line-height:1.4;margin-bottom:8px}
+.type-badge{
+  display:inline-block;font-size:11px;font-weight:600;
+  color:var(--coral);background:var(--coral-lt);
+  border:1px solid var(--coral-mid);border-radius:20px;padding:2px 8px;
+}
+.type-card.active .type-badge{background:var(--coral);color:#fff;border-color:var(--coral)}
+
+/* ── Uniform Pills ── */
+.pill-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));
+  gap:8px;
+}
+.pill{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:50px;
+  padding:8px 10px;
+  border-radius:var(--r-sm);
+  border:1.5px solid var(--border);
+  font-size:13px;
+  font-family:var(--font-b);
+  color:var(--ink2);
+  cursor:pointer;
+  background:var(--card);
+  transition:all .12s;
+  user-select:none;
+}
+.pill:hover{border-color:var(--border2);color:var(--ink)}
+.pill.active{border-color:var(--coral);background:var(--coral);color:#fff;font-weight:600}
+.pill.teal.active{border-color:var(--teal);background:var(--teal);color:#fff;font-weight:600}
+.pill-sub{font-size:11px;font-weight:400;opacity:0.85;margin-top:2px}
+
+/* ── Slider ── */
+.slider-wrap{padding:4px 0}
+.slider-row{display:flex;align-items:center;gap:14px}
+.slider-row input[type=range]{flex:1;accent-color:var(--coral);cursor:pointer;height:6px}
+.page-disp{display:flex;align-items:baseline;gap:4px}
+.page-num{
+  font-size:32px;font-weight:700;color:var(--coral);
+  letter-spacing:-1px;font-family:var(--font-b);min-width:44px;text-align:right;
+}
+.page-unit{font-size:13px;color:var(--ink3)}
+.slider-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-top:6px}
+.slider-cost{
+  font-size:12px;color:var(--ink2);margin-top:10px;
+  padding:8px 12px;background:var(--sun-lt);
+  border-radius:var(--r-sm);border:1px solid #f0e8c0;
+}
+.slider-cost b{color:var(--ink)}
+
+/* ── Next Button in Accordion ── */
+.step-next-btn{
+  margin-top:14px;
+  background:var(--charcoal);
+  color:#fff;
+  border:none;
+  padding:8px 16px;
+  border-radius:var(--r-sm);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:background .15s;
+}
+.step-next-btn:hover{background:#362a2a}
+
+/* ── Option grid ── */
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:400px){.opt-grid{grid-template-columns:1fr}}
+.opt-card{
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  padding:10px 12px;cursor:pointer;background:var(--card);
+  transition:all .12s;user-select:none;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.opt-card:hover{border-color:var(--border2)}
+.opt-card.active{border-color:var(--teal);background:var(--teal-lt)}
+.opt-name{font-size:13px;font-weight:500;color:var(--ink);line-height:1.35;margin-bottom:4px}
+.opt-price{font-size:12px;color:var(--ink3)}
+.opt-card.active .opt-price{color:var(--teal);font-weight:600}
+
+/* ── Delivery toggle ── */
+.delivery-row{display:flex;flex-direction:column;gap:8px}
+.del-card{
+  border:1.5px solid var(--border);border-radius:var(--r);
+  padding:12px 14px;cursor:pointer;background:var(--card);
+  display:flex;align-items:center;gap:12px;
+  transition:all .12s;user-select:none;
+}
+.del-card:hover{border-color:var(--border2)}
+.del-card.active{border-color:var(--teal);background:var(--teal-lt)}
+.del-radio{
+  width:18px;height:18px;border-radius:50%;
+  border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.del-card.active .del-radio{border-color:var(--teal)}
+.del-radio-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--teal);display:none;
+}
+.del-card.active .del-radio-dot{display:block}
+.del-info{flex:1}
+.del-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.del-desc{font-size:11px;color:var(--ink3);line-height:1.4}
+.del-price{font-size:13px;font-weight:600;color:var(--coral);margin-left:auto;flex-shrink:0}
+.del-free{color:var(--teal)}
+
+/* ── Util ── */
+.hidden{display:none!important}
+.divider{height:1px;background:var(--border);margin:14px 0 20px}
+.free-banner{
+  font-size:12px;padding:8px 12px;
+  background:var(--teal-lt);border:1px solid var(--teal-mid);
+  border-radius:var(--r-sm);color:var(--teal);font-weight:600;
+  margin-top:10px;
+}
+
+/* ── Result box ── */
+.result-box{
+  background:var(--charcoal);border-radius:var(--r-lg);
+  padding:22px;margin-top:4px;
+  box-shadow:var(--sh);
+}
+.result-title{
+  font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:#a09090;margin-bottom:14px}
+.breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.brow{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.bkey{color:#c8b8b8} .bval{color:#fff;font-weight:500}
+.bval.discount{color:var(--teal)}
+.result-div{height:1px;background:#6a5a5a;margin:12px 0}
+.total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.total-lbl{font-family:var(--font-h);font-size:18px;color:#fff}
+.total-price{font-size:38px;font-weight:700;color:var(--coral);letter-spacing:-1.5px;line-height:1}
+.total-note{font-size:11px;color:#a09090;line-height:1.6;margin-bottom:18px}
+.was-price{font-size:14px;color:#8a7a7a;text-decoration:line-through;margin-left:8px;font-weight:400}
+.discount-tag{
+  display:inline-block;font-size:11px;font-weight:600;
+  background:var(--teal);color:#fff;border-radius:4px;
+  padding:2px 7px;margin-left:8px;vertical-align:middle;
+}
+
+/* ── CTA ── */
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  flex:1;min-width:140px;padding:13px 14px;border-radius:var(--r-sm);
+  border:none;font-size:14px;font-weight:600;font-family:var(--font-b);
+  cursor:pointer;text-align:center;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:opacity .15s,transform .1s;
+}
+.btn:hover{opacity:.9} .btn:active{transform:scale(.98)}
+.btn-amazon{background:var(--coral);color:#fff}
+.btn-wa{background:#25D366;color:#fff}
+
+/* ── Sticky Bottom Bar ── */
+.sticky-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(42,32,32,0.96);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid rgba(255,255,255,0.12);
+  padding:10px 16px;z-index:99;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.18);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;transition:transform .25s ease, opacity .25s ease;
+}
+.sticky-bar.hide-bar{transform:translateY(100%);opacity:0;pointer-events:none}
+.sticky-inner{max-width:680px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sticky-pricing{display:flex;flex-direction:column}
+.sticky-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#c8b8b8;font-weight:600}
+.sticky-amt-row{display:flex;align-items:baseline;gap:6px}
+.sticky-price{font-size:22px;font-weight:700;color:var(--coral);line-height:1.1}
+.sticky-was{font-size:11px;color:#8a7a7a;text-decoration:line-through}
+.sticky-cta{display:flex;gap:8px}
+.sticky-btn{
+  padding:8px 12px;font-size:12px;font-weight:600;
+  border-radius:var(--r-sm);text-decoration:none;
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+}
+
+/* ── Footer ── */
+footer{
+  text-align:center;font-size:11px;color:var(--ink3);
+  margin-top:44px;padding:0 20px;line-height:1.8;
+}
+.footer-brand{font-family:var(--font-h);font-size:15px;color:var(--ink2);margin-bottom:3px;font-weight:600}
+.footer-tag{font-style:italic;color:var(--ink3)}
+.state-msg{text-align:center;padding:40px 20px;font-size:14px;color:var(--ink3)}
+.state-msg.error{color:var(--coral)}
+</style>
+</head>
+<body>
+
+<div class="blob-bg">
+  <svg width="420" height="380" viewBox="0 0 420 380" style="top:-60px;left:-80px">
+    <path d="M80,40 Q160,0 240,60 Q320,120 300,200 Q280,280 180,300 Q80,320 40,240 Q0,160 80,40Z" fill="#E8384F" opacity=".13"/>
+    <path d="M10,280 Q60,240 100,280 Q140,320 110,360 Q80,400 30,380 Q-20,360 10,280Z" fill="#F5B800" opacity=".18"/>
+  </svg>
+  <svg width="380" height="360" viewBox="0 0 380 360" style="top:0;right:-60px">
+    <path d="M320,20 Q400,60 380,160 Q360,260 280,280 Q200,300 160,220 Q120,140 180,80 Q240,20 320,20Z" fill="#3DB8B8" opacity=".12"/>
+    <path d="M340,280 Q390,300 380,350 Q370,400 320,390 Q270,380 280,330 Q290,280 340,280Z" fill="#F5B800" opacity=".15"/>
+  </svg>
+</div>
+
+<!-- Header Loading logo.webp directly -->
+<header>
+  <a href="#" class="header-logo-wrap">
+    <img src="logo.webp" alt="Printalo" />
+  </a>
+  <div class="header-tagline">The best stories deserve to be lived again.</div>
+</header>
+
+<div class="outer">
+
+  <div class="hero">
+    <h1 class="hero-title">Pricing Calculator</h1>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step-card active-step" id="step-card-type">
+    <div class="step-hdr" onclick="toggleStep('type')">
+      <div class="step-hdr-left">
+        <div class="step-num">1</div>
+        <span class="step-lbl">Album Type</span>
+      </div>
+      <div class="step-summary" id="sum-type">Select</div>
+    </div>
+    <div class="step-body">
+      <div class="type-grid" id="type-grid">
+        <div class="state-msg">Loading…</div>
+      </div>
+      <button class="step-next-btn" onclick="nextStep('size')">Continue to Size →</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card" id="step-card-size">
+    <div class="step-hdr" onclick="toggleStep('size')">
+      <div class="step-hdr-left">
+        <div class="step-num">2</div>
+        <span class="step-lbl">Size</span>
+      </div>
+      <div class="step-summary" id="sum-size">Select</div>
+    </div>
+    <div class="step-body">
+      <div class="pill-row" id="size-row"></div>
+      <button class="step-next-btn" onclick="nextStep('pages')">Continue to Pages →</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-card" id="step-card-pages">
+    <div class="step-hdr" onclick="toggleStep('pages')">
+      <div class="step-hdr-left">
+        <div class="step-num">3</div>
+        <span class="step-lbl">Number of Pages</span>
+      </div>
+      <div class="step-summary" id="sum-pages">24 pages</div>
+    </div>
+    <div class="step-body">
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="page-slider" min="10" max="100" step="2" value="24" oninput="onPages(this.value)">
+          <div class="page-disp">
+            <span class="page-num" id="page-display">24</span>
+            <span class="page-unit">pages</span>
+          </div>
+        </div>
+        <div class="slider-meta">
+          <span id="slider-min">Min 10 pages</span>
+          <span id="slider-max">Max 100 pages</span>
+        </div>
+        <div class="slider-cost">Printing cost: <b id="print-cost-display">₹720</b></div>
+      </div>
+      <button class="step-next-btn" onclick="goToNextAfterPages()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Cover (Conditional) -->
+  <div class="step-card" id="step-card-cover">
+    <div class="step-hdr" onclick="toggleStep('cover')">
+      <div class="step-hdr-left">
+        <div class="step-num" id="cover-step-num">4</div>
+        <span class="step-lbl">Album Cover</span>
+      </div>
+      <div class="step-summary" id="sum-cover">Standard</div>
+    </div>
+    <div class="step-body">
+      <div class="pill-row" id="cover-row"></div>
+      <button class="step-next-btn" onclick="nextStep('finish')">Continue to Finish →</button>
+    </div>
+  </div>
+
+  <!-- Step 5: Finish -->
+  <div class="step-card" id="step-card-finish">
+    <div class="step-hdr" onclick="toggleStep('finish')">
+      <div class="step-hdr-left">
+        <div class="step-num" id="finish-step-num">5</div>
+        <span class="step-lbl">Page Finish</span>
+      </div>
+      <div class="step-summary" id="sum-finish">Silky matte</div>
+    </div>
+    <div class="step-body">
+      <div class="opt-grid" id="finish-grid"></div>
+      <button class="step-next-btn" onclick="nextStep('delivery')">Continue to Delivery →</button>
+    </div>
+  </div>
+
+  <!-- Step 6: Delivery -->
+  <div class="step-card" id="step-card-delivery">
+    <div class="step-hdr" onclick="toggleStep('delivery')">
+      <div class="step-hdr-left">
+        <div class="step-num" id="delivery-step-num">6</div>
+        <span class="step-lbl">Delivery Method</span>
+      </div>
+      <div class="step-summary" id="sum-delivery">Standard</div>
+    </div>
+    <div class="step-body">
+      <div class="delivery-row" id="delivery-row">
+        <div class="del-card active" id="del-standard" onclick="setDelivery('standard')">
+          <div class="del-radio"><div class="del-radio-dot"></div></div>
+          <div class="del-info">
+            <div class="del-name">Standard Delivery</div>
+            <div class="del-desc" id="del-standard-desc">Dispatches in 2 business days · Approx 5–7 days estimated transit</div>
+          </div>
+          <div class="del-price del-free" id="del-standard-price">Free</div>
+        </div>
+        <div class="del-card" id="del-air" onclick="setDelivery('air')">
+          <div class="del-radio"><div class="del-radio-dot"></div></div>
+          <div class="del-info">
+            <div class="del-name">Quick Delivery by Air ✈️</div>
+            <div class="del-desc">Dispatches in 2 business days · Approx 3–4 days estimated transit (not guaranteed)</div>
+          </div>
+          <div class="del-price">+₹500</div>
+        </div>
+      </div>
+      <div class="free-banner" id="free-banner">🎉 Free standard delivery applied for 24+ pages!</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Price summary -->
+  <div class="result-box" id="result-box">
+    <p class="result-title">Order Summary & Price Breakdown</p>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="result-div"></div>
+    <div class="total-row">
+      <span class="total-lbl">Total</span>
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <span class="total-price" id="total-price">₹0</span>
+        <span class="was-price hidden" id="was-price"></span>
+        <span class="discount-tag hidden" id="discount-tag">10% off</span>
+      </div>
+    </div>
+    <p class="total-note" id="total-note"></p>
+    <div class="cta-row">
+      <a class="btn btn-amazon" id="btn-amazon" href="https://www.amazon.in/s?k=printalo" target="_blank">🛒 Order on Amazon</a>
+      <a class="btn btn-wa" id="btn-wa" href="https://wa.me/919899916153" target="_blank">💬 Order on WhatsApp</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Sticky Bottom Bar -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-inner">
+    <div class="sticky-pricing">
+      <span class="sticky-lbl">Final Total</span>
+      <div class="sticky-amt-row">
+        <span class="sticky-price" id="sticky-total">₹0</span>
+        <span class="sticky-was" id="sticky-was"></span>
+      </div>
+    </div>
+    <div class="sticky-cta">
+      <a class="sticky-btn btn-amazon" id="sticky-btn-amazon" href="https://www.amazon.in/s?k=printalo" target="_blank">🛒 Amazon</a>
+      <a class="sticky-btn btn-wa" id="sticky-btn-wa" href="https://wa.me/919899916153" target="_blank">💬 WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-brand">printalo</p>
+  <p class="footer-tag">"The best stories deserve to be lived again."</p>
+  <p style="margin-top:8px">Dispatches within 2 business days. Transit timings are carrier estimates.</p>
+  <p style="margin-top:6px">© 2026 Printalo</p>
+</footer>
+
+<script>
+const DISCOUNT = 0.10; // 10%
+
+let DATA = {};
+let S = { type:"", size:"", pages:24, cover:0, finish:0, delivery:"standard" };
+
+function toggleStep(stepKey) {
+  const card = document.getElementById("step-card-" + stepKey);
+  const wasActive = card.classList.contains("active-step");
+  document.querySelectorAll(".step-card").forEach(c => c.classList.remove("active-step"));
+  if (!wasActive) card.classList.add("active-step");
+}
+
+function nextStep(nextKey) {
+  document.querySelectorAll(".step-card").forEach(c => c.classList.remove("active-step"));
+  const nextCard = document.getElementById("step-card-" + nextKey);
+  if(nextCard && !nextCard.classList.contains("hidden")) {
+    nextCard.classList.add("active-step");
+    nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function goToNextAfterPages() {
+  const d = DATA[S.type];
+  if (d && d.covers && d.covers.length > 0) {
+    nextStep('cover');
+  } else {
+    nextStep('finish');
+  }
+}
+
+function setupStickyObserver() {
+  const resultBox = document.getElementById("result-box");
+  const stickyBar = document.getElementById("sticky-bar");
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        stickyBar.classList.add("hide-bar");
+      } else {
+        stickyBar.classList.remove("hide-bar");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  if (resultBox) observer.observe(resultBox);
+}
+
+async function initCalculator() {
+  try {
+    const res = await fetch('./printalo-pricing-data.json');
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    DATA = await res.json();
+    const orderedKeys = Object.keys(DATA);
+    const defaultKey = orderedKeys.includes("magazine") ? "magazine" : orderedKeys[0];
+    renderTypeCards(defaultKey);
+    setType(defaultKey, false);
+    setupStickyObserver();
+  } catch(err) {
+    console.error(err);
+    document.getElementById("type-grid").innerHTML =
+      '<div class="state-msg error">⚠ Could not load pricing data. Make sure printalo-pricing-data.json is in the same directory.</div>';
+  }
+}
+
+function renderTypeCards(activeKey) {
+  const grid = document.getElementById("type-grid");
+  grid.innerHTML = "";
+  Object.entries(DATA).forEach(([key, item]) => {
+    const c = document.createElement("div");
+    c.className = "type-card" + (key === activeKey ? " active" : "");
+    c.id = "tc-" + key;
+    c.onclick = () => {
+      setType(key, true);
+    };
+    c.innerHTML = `
+      <div class="type-check">✓</div>
+      <div class="type-icon">${item.icon||"📘"}</div>
+      <div class="type-name">${item.name||item.label}</div>
+      <div class="type-desc">${item.desc||""}</div>
+      <span class="type-badge">₹${item.printPerPage} / page</span>`;
+    grid.appendChild(c);
+  });
+}
+
+function setType(t, advance = false) {
+  S.type = t; S.cover = 0; S.finish = 0;
+  const d = DATA[t];
+  S.size  = d.sizes[0];
+
+  let initialPages = 24;
+  if (initialPages < d.pageMin) initialPages = d.pageMin;
+  if (initialPages > d.pageMax) initialPages = d.pageMax;
+  S.pages = initialPages;
+
+  const sl = document.getElementById("page-slider");
+  sl.min = d.pageMin;
+  sl.max = d.pageMax;
+  sl.step = d.pageStep || 2;
+  sl.value = initialPages;
+
+  document.getElementById("page-display").textContent = initialPages;
+  document.getElementById("slider-min").textContent = "Min " + d.pageMin + " pages";
+  document.getElementById("slider-max").textContent = "Max " + d.pageMax + " pages";
+
+  Object.keys(DATA).forEach(k => {
+    const el = document.getElementById("tc-" + k);
+    if(el) el.classList.toggle("active", k === t);
+  });
+
+  const hasCovers = d.covers && d.covers.length > 0;
+  const coverCard = document.getElementById("step-card-cover");
+  if (hasCovers) {
+    coverCard.classList.remove("hidden");
+    document.getElementById("cover-step-num").textContent = "4";
+    document.getElementById("finish-step-num").textContent = "5";
+    document.getElementById("delivery-step-num").textContent = "6";
+  } else {
+    coverCard.classList.add("hidden");
+    document.getElementById("finish-step-num").textContent = "4";
+    document.getElementById("delivery-step-num").textContent = "5";
+  }
+
+  render();
+  if(advance) nextStep('size');
+}
+
+function onPages(v) {
+  S.pages = parseInt(v, 10);
+  document.getElementById("page-display").textContent = v;
+  document.getElementById("print-cost-display").textContent =
+    fmt(S.pages * DATA[S.type].printPerPage);
+  renderFinishes();
+  updateDeliveryUI();
+  updateTotal();
+}
+
+function setDelivery(mode) {
+  S.delivery = mode;
+  document.getElementById("del-standard").classList.toggle("active", mode === "standard");
+  document.getElementById("del-air").classList.toggle("active", mode === "air");
+  updateTotal();
+}
+
+function updateDeliveryUI() {
+  const isFreeStandard = S.pages >= 24;
+  const stdPriceEl = document.getElementById("del-standard-price");
+  const stdDescEl  = document.getElementById("del-standard-desc");
+  const banner     = document.getElementById("free-banner");
+
+  if(isFreeStandard) {
+    stdPriceEl.textContent = "Free";
+    stdPriceEl.className = "del-price del-free";
+    stdDescEl.textContent = "Dispatches in 2 business days · Approx 5–7 days transit (Free for 24+ pages)";
+    banner.classList.remove("hidden");
+  } else {
+    stdPriceEl.textContent = "+₹200";
+    stdPriceEl.className = "del-price";
+    stdDescEl.textContent = "Dispatches in 2 business days · Approx 5–7 days transit";
+    banner.classList.add("hidden");
+  }
+}
+
+function renderFinishes() {
+  const d = DATA[S.type];
+  const grid = document.getElementById("finish-grid");
+  grid.innerHTML = "";
+  const sheets = Math.ceil(S.pages / 2);
+
+  (d.finishes || []).forEach((item, i) => {
+    const totalFinishPrice = (item.perSheetPrice || 0) * sheets;
+    const el = document.createElement("div");
+    el.className = "opt-card" + (i === S.finish ? " active" : "");
+    el.innerHTML = `
+      <div class="opt-name">${item.name}</div>
+      <div class="opt-price">${totalFinishPrice === 0
+        ? "<span style='color:var(--teal)'>Included</span>"
+        : "+₹" + totalFinishPrice.toLocaleString("en-IN") + ` (${S.pages} pages)`
+      }</div>`;
+    el.onclick = () => {
+      S.finish = i;
+      grid.querySelectorAll(".opt-card").forEach((c,j) => c.classList.toggle("active", j===i));
+      updateTotal();
+    };
+    grid.appendChild(el);
+  });
+}
+
+function render() {
+  const d = DATA[S.type];
+  if(!d) return;
+
+  // Sizes
+  const sizeRow = document.getElementById("size-row");
+  sizeRow.innerHTML = "";
+  d.sizes.forEach((s, i) => {
+    const el = document.createElement("div");
+    el.className = "pill" + (s === S.size ? " active" : "");
+    el.innerHTML = `<div>${s}</div>`;
+    el.onclick = () => {
+      S.size = s;
+      sizeRow.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+      el.classList.add("active");
+      updateTotal();
+    };
+    sizeRow.appendChild(el);
+  });
+
+  // Covers
+  const coverRow = document.getElementById("cover-row");
+  coverRow.innerHTML = "";
+  if(d.covers && d.covers.length > 0) {
+    d.covers.forEach((c, i) => {
+      const el = document.createElement("div");
+      el.className = "pill teal" + (i === S.cover ? " active" : "");
+      el.innerHTML = `<div>${c.name}</div><div class="pill-sub">${c.price > 0 ? "+₹" + c.price : "Default"}</div>`;
+      el.onclick = () => {
+        S.cover = i;
+        coverRow.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+        el.classList.add("active");
+        updateTotal();
+      };
+      coverRow.appendChild(el);
+    });
+  }
+
+  renderFinishes();
+  document.getElementById("print-cost-display").textContent = fmt(S.pages * d.printPerPage);
+  updateDeliveryUI();
+  updateTotal();
+}
+
+function fmt(n) { return "₹" + n.toLocaleString("en-IN"); }
+
+function updateTotal() {
+  const d = DATA[S.type];
+  if(!d) return;
+
+  const sheets = Math.ceil(S.pages / 2);
+  const printCost = S.pages * d.printPerPage;
+  const bindingCost = d.binding || 0;
+  const coverObj = (d.covers && d.covers.length > 0 && d.covers[S.cover]) ? d.covers[S.cover] : null;
+  const coverCost = coverObj ? coverObj.price : 0;
+  
+  const finishObj = (d.finishes && d.finishes[S.finish]) ? d.finishes[S.finish] : { name: "Silky matte", perSheetPrice: 0 };
+  const finishCost = (finishObj.perSheetPrice || 0) * sheets;
+
+  let deliveryCost = 0;
+  if (S.delivery === "air") {
+    deliveryCost = 500;
+  } else {
+    deliveryCost = S.pages >= 24 ? 0 : 200;
+  }
+
+  const subtotal = printCost + bindingCost + coverCost + finishCost + deliveryCost;
+  const discountAmt = Math.round(subtotal * DISCOUNT);
+  const total = subtotal - discountAmt;
+
+  document.getElementById("sum-type").textContent = d.name;
+  document.getElementById("sum-size").textContent = S.size;
+  document.getElementById("sum-pages").textContent = S.pages + " pages";
+  if (coverObj) document.getElementById("sum-cover").textContent = coverObj.name;
+  document.getElementById("sum-finish").textContent = finishObj.name;
+  document.getElementById("sum-delivery").textContent = S.delivery === "air" ? "Air (₹500)" : (deliveryCost === 0 ? "Standard (Free)" : "Standard (₹200)");
+
+  const rows = [];
+  const printingLabel = `Printing — ${S.pages} pages (${finishObj.name}) × ₹${d.printPerPage}`;
+  const totalPrintAndFinish = printCost + finishCost;
+  rows.push([printingLabel, totalPrintAndFinish]);
+
+  if(bindingCost) rows.push(["Binding", bindingCost]);
+  if(coverObj && coverCost > 0) rows.push([coverObj.name, coverCost]);
+  
+  if(deliveryCost > 0) {
+    rows.push([S.delivery === "air" ? "Quick delivery by air ✈️" : "Standard delivery", deliveryCost]);
+  } else {
+    rows.push(["Delivery", 0, "FREE"]);
+  }
+
+  rows.push(["10% off — applied automatically", -discountAmt]);
+
+  document.getElementById("breakdown").innerHTML = rows.map(([k,v,tag]) => {
+    const isDiscount = v < 0;
+    const isFree = tag === "FREE";
+    const valStr = isFree
+      ? "<span class='bval' style='color:var(--teal)'>FREE</span>"
+      : isDiscount
+        ? `<span class='bval discount'>${fmt(v)}</span>`
+        : `<span class='bval'>${fmt(v)}</span>`;
+    return `<div class="brow"><span class="bkey">${k}</span>${valStr}</div>`;
+  }).join("");
+
+  document.getElementById("total-price").textContent = fmt(total);
+
+  const wasPriceEl = document.getElementById("was-price");
+  const discountTagEl = document.getElementById("discount-tag");
+  wasPriceEl.textContent = fmt(subtotal);
+  wasPriceEl.classList.remove("hidden");
+  discountTagEl.classList.remove("hidden");
+
+  document.getElementById("sticky-total").textContent = fmt(total);
+  document.getElementById("sticky-was").textContent = fmt(subtotal);
+
+  document.getElementById("total-note").textContent =
+    d.label + " · " + S.size + " · " + S.pages + " pages · " + finishObj.name;
+
+  const waNumber = "919899916153";
+  const waMsg = encodeURIComponent(
+    "Hi Printalo! I'd like to order:\n" +
+    "Album: " + d.label + "\n" +
+    "Size: " + S.size + "\n" +
+    "Pages: " + S.pages + " pages\n" +
+    (coverObj ? "Cover: " + coverObj.name + "\n" : "") +
+    "Finish: " + finishObj.name + "\n" +
+    "Delivery: " + (S.delivery === "air" ? "Quick Air (₹500)" : (deliveryCost === 0 ? "Standard (Free)" : "Standard (₹200)")) + "\n" +
+    "Total (10% off): " + fmt(total)
+  );
+  document.getElementById("btn-wa").href = `https://wa.me/${waNumber}?text=` + waMsg;
+  document.getElementById("sticky-btn-wa").href = `https://wa.me/${waNumber}?text=` + waMsg;
+  
+  if(d.amazonLink) {
+    document.getElementById("btn-amazon").href = d.amazonLink;
+    document.getElementById("sticky-btn-amazon").href = d.amazonLink;
+  }
+}
+
+initCalculator();
+</script>
+</body>
+</html>
